@@ -18,3 +18,11 @@ Use Gradle task `stopServer`. This will remove all containers created with `star
 ```
 
 The database will be persisted in `./docker-compose-data/pgdata`
+
+### Testing
+
+#### Unit tests
+This will run the tests with junit 5:
+```bash
+./gradlew test
+```
