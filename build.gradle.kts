@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.3.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("com.avast.gradle.docker-compose") version "0.12.1"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
     kotlin("plugin.jpa") version "1.3.72"
@@ -40,3 +41,22 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "1.8"
     }
 }
+
+dockerCompose {
+    createNested("server").apply {
+        useComposeFiles = listOf("./docker-compose.yml")
+        buildBeforeUp = true
+    }
+}
+
+tasks.register("startServer") {
+    dependsOn(":bootJar")
+    dependsOn(":serverComposeUp")
+    group = "application"
+}
+
+tasks.register("stopServer") {
+    dependsOn(":serverComposeDown")
+    group = "application"
+}
+
