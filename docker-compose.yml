@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:11.6
+    restart: always
+    environment:
+      - POSTGRES_USER=wisemen
+      - POSTGRES_PASSWORD=wisemen
+      - POSTGRES_DB=wisemen
+    ports:
+      - "5432:5432"
+    volumes:
+    - ./docker-compose-data/pgdata:/var/lib/postgresql/data
+
+  monolith:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    environment:
+      - SERVER_PORT=3000
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=wisemen
+      - POSTGRES_PASSWORD=wisemen
+      - POSTGRES_DB=wisemen
+    ports:
+      - "3000:3000"
+    depends_on:
+        - db
+
