@@ -18,11 +18,9 @@ services:
       context: .
     environment:
       - SERVER_PORT=3000
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=wisemen
-      - POSTGRES_PASSWORD=wisemen
-      - POSTGRES_DB=wisemen
+      - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/wisemen?useUnicode=true&characterEncoding=UTF-8
+      - JDBC_DATABASE_USERNAME=wisemen
+      - JDBC_DATABASE_PASSWORD=wisemen
     ports:
       - "3000:3000"
     depends_on:
