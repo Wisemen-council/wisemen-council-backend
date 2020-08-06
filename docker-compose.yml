@@ -1,6 +1,7 @@
 version: "3.3"
 services:
   db:
+    container_name: db
     image: postgres:11.6
     restart: always
     environment:
@@ -10,9 +11,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-    - ./docker-compose-data/pgdata:/var/lib/postgresql/data
+      - ./docker-compose-data/pgdata:/var/lib/postgresql/data
 
   monolith:
+    container_name: monolith
     build:
       dockerfile: ./Dockerfile
       context: .
@@ -24,5 +26,4 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-        - db
-
+      - db
