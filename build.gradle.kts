@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.flywaydb.gradle.task.FlywayMigrateTask
 
 plugins {
     id("org.springframework.boot") version "2.3.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("com.avast.gradle.docker-compose") version "0.12.1"
+    id("org.flywaydb.flyway") version "6.5.3"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
     kotlin("plugin.jpa") version "1.3.72"
@@ -60,3 +62,14 @@ tasks.register("stopServer") {
     group = "application"
 }
 
+tasks.register<FlywayMigrateTask>("migrateLocalDatabase") {
+    url = "jdbc:postgresql://localhost:5432/wisemen"
+    user = "wisemen"
+    password = "wisemen"
+}
+
+tasks.register<FlywayMigrateTask>("migrateRemoteDatabase") {
+    url = "jdbc:postgresql://otto.db.elephantsql.com:5432/vkukpsgd"
+    user = "vkukpsgd"
+    password = "7Bf5sL8kntSPuAEs6-qyi2xTdFMxVjFj"
+}
