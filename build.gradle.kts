@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.flywaydb.gradle.task.FlywayMigrateTask
+import org.flywaydb.gradle.task.FlywayRepairTask
 
 plugins {
     id("org.springframework.boot") version "2.3.2.RELEASE"
@@ -63,13 +64,13 @@ tasks.register("stopServer") {
 }
 
 tasks.register<FlywayMigrateTask>("migrateLocalDatabase") {
-    url = "jdbc:postgresql://localhost:5432/wisemen"
-    user = "wisemen"
-    password = "wisemen"
+    url = System.getenv("JDBC_DATABASE_URL")
+    user = System.getenv("JDBC_DATABASE_USERNAME")
+    password = System.getenv("JDBC_DATABASE_PASSWORD")
 }
 
-tasks.register<FlywayMigrateTask>("migrateRemoteDatabase") {
-    url = "jdbc:postgresql://otto.db.elephantsql.com:5432/vkukpsgd"
-    user = "vkukpsgd"
-    password = "7Bf5sL8kntSPuAEs6-qyi2xTdFMxVjFj"
+tasks.register<FlywayRepairTask>("repairMigrations") {
+    url = System.getenv("JDBC_DATABASE_URL")
+    user = System.getenv("JDBC_DATABASE_USERNAME")
+    password = System.getenv("JDBC_DATABASE_PASSWORD")
 }
