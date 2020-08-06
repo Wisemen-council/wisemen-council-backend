@@ -19,7 +19,7 @@ services:
       dockerfile: ./Dockerfile
       context: .
     environment:
-      - SERVER_PORT=3000
+      - PORT=3000
       - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/wisemen?useUnicode=true&characterEncoding=UTF-8
       - JDBC_DATABASE_USERNAME=wisemen
       - JDBC_DATABASE_PASSWORD=wisemen
