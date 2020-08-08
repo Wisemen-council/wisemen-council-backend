@@ -1,6 +1,7 @@
 version: "3.3"
 services:
   db:
+    container_name: db
     image: postgres:11.6
     restart: always
     environment:
@@ -10,19 +11,19 @@ services:
     ports:
       - "5432:5432"
     volumes:
-    - ./docker-compose-data/pgdata:/var/lib/postgresql/data
+      - ./docker-compose-data/pgdata:/var/lib/postgresql/data
 
   monolith:
+    container_name: monolith
     build:
       dockerfile: ./Dockerfile
       context: .
     environment:
-      - SERVER_PORT=3000
+      - PORT=3000
       - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/wisemen?useUnicode=true&characterEncoding=UTF-8
       - JDBC_DATABASE_USERNAME=wisemen
       - JDBC_DATABASE_PASSWORD=wisemen
     ports:
       - "3000:3000"
     depends_on:
-        - db
-
+      - db

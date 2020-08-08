@@ -1,9 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.flywaydb.gradle.task.FlywayMigrateTask
+import org.flywaydb.gradle.task.FlywayRepairTask
 
 plugins {
     id("org.springframework.boot") version "2.3.2.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("com.avast.gradle.docker-compose") version "0.12.1"
+    id("org.flywaydb.flyway") version "6.5.3"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
     kotlin("plugin.jpa") version "1.3.72"
@@ -60,3 +63,14 @@ tasks.register("stopServer") {
     group = "application"
 }
 
+tasks.register<FlywayMigrateTask>("migrateLocalDatabase") {
+    url = System.getenv("JDBC_DATABASE_URL")
+    user = System.getenv("JDBC_DATABASE_USERNAME")
+    password = System.getenv("JDBC_DATABASE_PASSWORD")
+}
+
+tasks.register<FlywayRepairTask>("repairMigrations") {
+    url = System.getenv("JDBC_DATABASE_URL")
+    user = System.getenv("JDBC_DATABASE_USERNAME")
+    password = System.getenv("JDBC_DATABASE_PASSWORD")
+}
