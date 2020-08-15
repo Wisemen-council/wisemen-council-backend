@@ -52,8 +52,13 @@ dockerCompose {
     }
 }
 
-tasks.register("startServer") {
+tasks.register("buildServer") {
     dependsOn(":bootJar")
+    group = "application"
+}
+
+tasks.register("startServer") {
+    dependsOn(":buildServer")
     dependsOn(":serverComposeUp")
     group = "application"
 }
