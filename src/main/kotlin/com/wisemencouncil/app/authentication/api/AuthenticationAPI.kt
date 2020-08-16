@@ -12,7 +12,7 @@ class AuthenticationAPI @Autowired constructor(
         private val authenticationService: AuthenticationService
 ) {
 
-    @PostMapping("/")
+    @PostMapping("")
     fun authenticate(@RequestBody credentialsVM: CredentialsVM): SessionVM {
         val credentials = mapVMToCredentials(credentialsVM)
         return mapSessionToVM(authenticationService.authenticate(credentials))
