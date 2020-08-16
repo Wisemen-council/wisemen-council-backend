@@ -1,5 +1,6 @@
 package com.wisemencouncil.app.authentication.business
 
+import com.wisemencouncil.app.security.JwtTokenManager
 import com.wisemencouncil.app.security.isSameTextWhenHashed
 import com.wisemencouncil.app.users.business.User
 import com.wisemencouncil.app.users.business.UserService

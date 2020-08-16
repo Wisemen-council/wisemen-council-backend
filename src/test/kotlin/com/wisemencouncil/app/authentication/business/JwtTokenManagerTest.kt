@@ -1,15 +1,18 @@
 package com.wisemencouncil.app.authentication.business
 
+import com.wisemencouncil.app.security.AuthorizationException
+import com.wisemencouncil.app.security.JwtTokenManager
 import com.wisemencouncil.app.security.createAndSignTokenFromClaims
+import com.wisemencouncil.app.security.getClaimsFromToken
 import com.wisemencouncil.app.users.business.User
-import io.mockk.mockkStatic
-import io.mockk.every
-import io.mockk.slot
-import io.mockk.verify
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.MalformedJwtException
+import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -72,5 +75,38 @@ internal class JwtTokenManagerTest {
                 entry("userId", user.id),
                 entry("userEmail", user.email)
         )
+    }
+
+    @Test
+    fun createUserFromToken_whenTokenIsInvalid_throwsAuthorizationException() {
+        every {
+            getClaimsFromToken(A_TOKEN, appSecret)
+        } throws MalformedJwtException(A_TOKEN)
+
+        assertThrows<AuthorizationException> { tokenManager.createUserFromToken(A_TOKEN) }
+    }
+
+    @Test
+    fun createUserFromToken_whenTokenIsValid_returnsUser() {
+        val userId = 1L
+        val userEmail = "jon@example.com"
+        val claims = mockk<Claims>()
+        every {
+            claims.get("userId", Long::class.javaObjectType)
+        } returns userId
+
+        every {
+            claims.get("userEmail", String::class.java)
+        } returns userEmail
+
+        every {
+            getClaimsFromToken(A_TOKEN, appSecret)
+        } returns claims
+
+        val actual = tokenManager.createUserFromToken(A_TOKEN)
+
+        assertThat(actual).extracting("id", "email")
+                .containsExactly(userId, userEmail)
+
     }
 }

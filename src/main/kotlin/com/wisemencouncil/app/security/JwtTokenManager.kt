@@ -1,7 +1,7 @@
-package com.wisemencouncil.app.authentication.business
+package com.wisemencouncil.app.security
 
-import com.wisemencouncil.app.security.createAndSignTokenFromClaims
 import com.wisemencouncil.app.users.business.User
+import io.jsonwebtoken.MalformedJwtException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.security.Key
@@ -19,5 +19,14 @@ class JwtTokenManager @Autowired constructor(private val appSecret: Key) {
         claims["userEmail"] = user.email
 
         return createAndSignTokenFromClaims(claims, appSecret)
+    }
+
+    fun createUserFromToken(token: String): User = try {
+        val claims = getClaimsFromToken(token, appSecret)
+        val userId = claims.get("userId", Long::class.javaObjectType)
+        val userEmail = claims.get("userEmail", String::class.java)
+        User(userId, userEmail, "")
+    } catch (e: MalformedJwtException) {
+        throw AuthorizationException()
     }
 }
