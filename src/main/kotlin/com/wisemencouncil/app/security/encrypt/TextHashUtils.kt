@@ -1,4 +1,4 @@
-package com.wisemencouncil.app.security
+package com.wisemencouncil.app.security.encrypt
 
 import org.mindrot.jbcrypt.BCrypt
 

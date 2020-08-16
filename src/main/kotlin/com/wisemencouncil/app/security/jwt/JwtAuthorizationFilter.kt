@@ -1,4 +1,4 @@
-package com.wisemencouncil.app.security
+package com.wisemencouncil.app.security.jwt
 
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken

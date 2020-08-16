@@ -1,9 +1,9 @@
 package com.wisemencouncil.app.authentication.business
 
-import com.wisemencouncil.app.security.AuthorizationException
-import com.wisemencouncil.app.security.JwtTokenManager
-import com.wisemencouncil.app.security.createAndSignTokenFromClaims
-import com.wisemencouncil.app.security.getClaimsFromToken
+import com.wisemencouncil.app.security.web.AuthorizationException
+import com.wisemencouncil.app.security.jwt.JwtTokenManager
+import com.wisemencouncil.app.security.jwt.createAndSignTokenFromClaims
+import com.wisemencouncil.app.security.jwt.getClaimsFromToken
 import com.wisemencouncil.app.users.business.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.MalformedJwtException
@@ -30,7 +30,7 @@ internal class JwtTokenManagerTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        mockkStatic("com.wisemencouncil.app.security.JwtUtilsKt")
+        mockkStatic("com.wisemencouncil.app.security.jwt.JwtUtilsKt")
     }
 
     @Test
