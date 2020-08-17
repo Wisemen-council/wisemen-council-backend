@@ -32,6 +32,16 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+
+    implementation("org.mindrot:jbcrypt:0.3m")
+
+    implementation("io.jsonwebtoken:jjwt-api:0.10.7")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.10.7")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.10.7")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.+")
+
+    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("io.mockk:mockk:1.9.3")
 }
 
 tasks.withType<Test> {
