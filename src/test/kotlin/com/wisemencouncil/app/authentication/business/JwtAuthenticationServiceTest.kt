@@ -1,6 +1,7 @@
 package com.wisemencouncil.app.authentication.business
 
-import com.wisemencouncil.app.security.isSameTextWhenHashed
+import com.wisemencouncil.app.security.jwt.JwtTokenManager
+import com.wisemencouncil.app.security.encrypt.isSameTextWhenHashed
 import com.wisemencouncil.app.users.business.User
 import com.wisemencouncil.app.users.business.UserService
 import io.mockk.every
@@ -30,7 +31,7 @@ internal class JwtAuthenticationServiceTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        mockkStatic("com.wisemencouncil.app.security.TextHashUtilsKt")
+        mockkStatic("com.wisemencouncil.app.security.encrypt.TextHashUtilsKt")
     }
 
     @Test
