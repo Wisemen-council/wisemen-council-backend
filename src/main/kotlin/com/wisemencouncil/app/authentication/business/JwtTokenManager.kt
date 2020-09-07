@@ -11,6 +11,8 @@ import kotlin.collections.HashMap
 @Service
 class JwtTokenManager @Autowired constructor(private val appSecret: Key) {
     fun createTokenFromUser(user: User): String {
+        if (user.id == null) throw AuthenticationException()
+
         val claims = HashMap<String, Any>()
         claims["iss"] = "Authentication API"
         claims["sub"] = "AccessToken"
