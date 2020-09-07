@@ -1,6 +1,6 @@
 package com.wisemencouncil.app.users.business
 
-import com.wisemencouncil.app.security.isSignUpDataValid
+import com.wisemencouncil.app.security.isUserSignUpDataValid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -20,12 +20,12 @@ class UserService @Autowired constructor(private val userRepository: UserReposit
     }
 
     @Transactional
-    fun createUser(signUpData: SignUpData): User? {
-        if (!isSignUpDataValid(signUpData)) {
+    fun createUser(user: User): User? {
+        if (!isUserSignUpDataValid(user)) {
             throw SignUpException()
         }
 
-        val entity = userRepository.save(mapSignUpDataToUserEntity(signUpData))
+        val entity = userRepository.save(mapUserToEntity(user))
         return mapEntityToUser(entity)
     }
 }
