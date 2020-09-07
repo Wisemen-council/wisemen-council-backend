@@ -1,5 +1,6 @@
 package com.wisemencouncil.app.security.jwt
 
+import com.wisemencouncil.app.authentication.business.AuthenticationException
 import com.wisemencouncil.app.security.web.AuthorizationException
 import com.wisemencouncil.app.users.business.User
 import io.jsonwebtoken.MalformedJwtException
