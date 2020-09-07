@@ -1,5 +1,6 @@
 package com.wisemencouncil.app.security.jwt
 
+import com.wisemencouncil.app.authentication.business.AuthenticationException
 import com.wisemencouncil.app.security.web.AuthorizationException
 import com.wisemencouncil.app.users.business.User
 import io.jsonwebtoken.MalformedJwtException
@@ -12,6 +13,8 @@ import kotlin.collections.HashMap
 @Service
 class JwtTokenManager @Autowired constructor(private val appSecret: Key) {
     fun createTokenFromUser(user: User): String {
+        if (user.id == null) throw AuthenticationException()
+
         val claims = HashMap<String, Any>()
         claims["iss"] = "Authentication API"
         claims["sub"] = "AccessToken"
