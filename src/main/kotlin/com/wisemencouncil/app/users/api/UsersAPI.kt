@@ -13,12 +13,12 @@ class UsersAPI @Autowired constructor(
 ) {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    fun signUp(@RequestBody signUpDataVM: SignUpDataVM) {
-        val signUpData = mapVMToSignUpData(signUpDataVM)
-        userService.createUser(signUpData)
+    fun signUp(@RequestBody userVM: UserVM) {
+        val user = mapVMToUser(userVM)
+        userService.createUser(user)
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(SignUpException::class)
     fun handleUserSignUpException() {
     }
